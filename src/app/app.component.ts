@@ -106,19 +106,19 @@ export class AppComponent implements OnInit{
 
     var data_inv=`{
       "0":{
-        "name": "Набор для починки",
+        "name": "Ремонтный комплект",
         "img": "repair-kit.png",
         "x": "1",
         "slot": "37"
       },
       "1":{
-        "name": "Набор для починки",
+        "name": "Ремонтный комплект",
         "img": "repair-kit.png",
         "x": "3",
         "slot": "12"
       },
       "2":{
-        "name": "Набор для починки",
+        "name": "Ремонтный комплект",
         "img": "repair-kit.png",
         "x": "3",
         "slot": "29"
@@ -134,7 +134,9 @@ export class AppComponent implements OnInit{
 
     for(let i = 0; i<data_inv_length; i++){
       var slot = document.querySelectorAll(`[slot="${json_data_inv[i]["slot"]}"] .content_item`);
-      slot[0].innerHTML = `<img src='assets/images/${json_data_inv[i]['img']}' class="image_item"/>
+      slot[0].innerHTML = `
+      <div class="name_item">${json_data_inv[i]["name"]}</div>
+      <img src='assets/images/${json_data_inv[i]['img']}' class="image_item"/>
       <p class="count_items">${json_data_inv[i]["x"]} шт.</p>`
     }
 
