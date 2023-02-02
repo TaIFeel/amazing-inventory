@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 
 
 @Component({
@@ -11,6 +11,9 @@ export class AppComponent implements OnInit{
 
   oppened_page=1;
   max_page=0;
+  loaded=true;
+
+  @ViewChild('inv') invent?: ElementRef;
 
   next_page(){
     var page_cur = document.querySelector(`[page_num="${this.oppened_page}"]`);
@@ -73,20 +76,21 @@ export class AppComponent implements OnInit{
 
     var cur_page = page;
 
-    var loaded_item = 0;
+    var loaded_items = 0;
 
 
-    function fill_inv(slots:number, item_fill:string, end_slot:number){
-      for(loaded_item;loaded_item!=end_slot;loaded_item++){
+    function fill_inv(slot_status:string, slots:number){
+      let end_slot = slots+loaded_items;
+      for(loaded_items;loaded_items!=end_slot;loaded_items++){
 
         var item = document.createElement("div");
 
-        item.setAttribute("slot", `${loaded_item}`);
-        item.classList.add('item', `item-${item_fill}`);
+        item.setAttribute("slot", `${loaded_items}`);
+        item.classList.add('item', `item-${slot_status}`);
         item.innerHTML = '<div class="content_item"></div>'
         cur_page.appendChild(item);
 
-        if((loaded_item+1)%30 === 0){
+        if((loaded_items+1)%30 === 0){
           var page_num = Number(cur_page.getAttribute("page_num"))+1;
 
           if(page_num <= max_page){
@@ -125,8 +129,8 @@ export class AppComponent implements OnInit{
       }
     }`
 
-    fill_inv(active_slot, "active", active_slot+loaded_item);
-    fill_inv(unactive_slot, "unactive", unactive_slot+loaded_item);
+    fill_inv("active", active_slot);
+    fill_inv("unactive", unactive_slot);
 
     var json_data_inv = JSON.parse(data_inv);
 
@@ -139,6 +143,8 @@ export class AppComponent implements OnInit{
       <img src='assets/images/${json_data_inv[i]['img']}' class="image_item"/>
       <p class="count_items">${json_data_inv[i]["x"]} шт.</p>`
     }
+
+  this.loaded = true
 
 
   }

@@ -86,6 +86,11 @@ button{
     height: 30px;
 }
 
+button:hover{
+    width: 32px;
+    height: 32px;
+}
+
 .name_item{
     color: #b0a184;
     height: 28px;
